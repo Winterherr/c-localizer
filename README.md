@@ -1,9 +1,12 @@
 ## Localizer
 Localizer is a small library written in C which is supposed to help users with localization in their own projects.
 The project is still in it's beginning. Featuring currently only a basic usage of the localization.
-## Usage
+
+## Installation
 To use this library, simply drag the header and .c file into your project and include the header file with 
-``#include <localizer.h>`` and when compiling make sure to list the localizer.c in the files.
+``#include "localizer.h"`` and when compiling make sure to list the localizer.c in the files.
+
+## Usage
 First, lets get over the necessary structure for localisation:
 #### The language index file
 The language index file is a file which contains all the language codes with their corresponding index. As of now, the language index file **has** to be in the same directory as the `path`. The format of the file is as follows:
