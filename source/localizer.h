@@ -14,6 +14,10 @@
 
 //extern char language_index_path[PATH_MAX];
 
+//inits
+
+void init_localizer(char* path, char* index_file_name);
+
 //Should be ../locale/
 void set_localizer_path(char* path);
 void open_language_index_file(char* index_file_name);

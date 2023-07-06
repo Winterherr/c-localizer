@@ -23,22 +23,26 @@ char*  line_buffer;
 
 FILE* language_index_file;
 
+void init_localizer(char *path, char *index_file_name){
+  set_localizer_path(path);
+  open_language_index_file(index_file_name);
+}
 
 void strcpy_to_char(char* dest, char* src, char stop){
   char* dest_start = dest;
   while (*src != stop && *src != '\0') {
     (*dest) = *(src);
-    dest++;
-    src++;
+    dest++; src++;
   }
   *(dest++) = '\0';
   dest = dest_start;
 }
 //extract a part of the src string and put it into the dest string, extracted part does NOT include the start and stop chars, you have to make sure both start and stop exist
+//dest string is null-terminated
 void strxtrc(char* dest, char* src, char start, char stop){
   char* src_start=src; 
   char* dest_start=dest;
-  //first, locate the beginning by searching for start char and switch strt
+  //first, locate the beginning by searching for start char
   while (*src != start) 
     ++src;
 
@@ -48,8 +52,7 @@ void strxtrc(char* dest, char* src, char start, char stop){
     if(*src==stop)
       break;
     *dest=*src;
-    ++src;
-    ++dest;
+    ++src; ++dest;
   }
   *dest='\0';
 }
@@ -59,7 +62,7 @@ void set_localizer_path(char* path){
   strcpy(locale_path, path);
 }
 
-//return void because user doesnt need access to the file pointer
+//returns void because user doesnt need access to the index_file pointer
 void open_language_index_file(char* index_file_name){
   char index_path[PATH_MAX];
   strcpy(index_path, locale_path);
@@ -69,22 +72,22 @@ void open_language_index_file(char* index_file_name){
     printf("borked!\n");
 }
 
+//returns de_ or en_ ... return should be checked for NULL
 //check language_index.yaml for language ids, for custom languages use 'n' with n being a number
-//return de_ or en_ ... return should be checked for NULL
 char* get_language_id(char language){
   char* line_buffer = (char*) malloc(sizeof(char)*BUFSIZ);
   char c;
-  int offset = 0;
   
   while(language != (c=fgetc(language_index_file)))
     ;
   fgetc(language_index_file);
-  printf("%c", c);
+  //printf("%c", c);
   fgets(line_buffer, 3, language_index_file); //3 because 2 for ISO CODE and 1 for \0
   strcat(line_buffer, "_\0");
   return line_buffer;
 }
 
+//return the filepointer for one localized file
 //name: name of the file (main_menu/settings_menu e.c), language id: which language to use
 FILE* open_localised_file(char* name, char language_id){
   char file_path[100];
@@ -99,7 +102,7 @@ char* get_localized_string_from_file(FILE* localized_file ,char* name, char cate
   strcpy(requested_string, name);
   strcat(requested_string, get_category(category));
 
-  while(1){
+  while(!feof(localized_file)){
     fgets(name_buffer_file, BUFSIZ, localized_file); //get line
     strcpy_to_char(name_buffer, name_buffer_file, SEPERATOR); //copy to SEPERATOR and comppare the names
     if(strcmp(name_buffer, requested_string) == 0)
