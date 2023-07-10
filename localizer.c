@@ -12,7 +12,6 @@
 
 #define LANG_ID_MAX 2
 
-
 char   locale_path[PATH_MAX];
 char   language_index_path[PATH_MAX];
 char   requested_string[BUFSIZ];
@@ -39,6 +38,8 @@ void strcpy_to_char(char* dest, char* src, char stop){
 void strxtrc(char* dest, char* src, char start, char stop){
   char* src_start =src; 
   char* dest_start=dest;
+  int is_escape=0;
+  
   //first, locate the beginning by searching for start char
   while (*src != start) 
     ++src;
@@ -46,17 +47,23 @@ void strxtrc(char* dest, char* src, char start, char stop){
   ++src; //get to next char to not include start char
 
   while (1) {
-    if(*src==stop)
+    if(*src=='\\'){
+      is_escape=1;
+      ++src;
+      continue;
+    }
+    if(*src==stop && !is_escape)
       break;
     *dest=*src;
     ++src; ++dest;
+    is_escape=0;
   }
   *dest ='\0';
   dest  =dest_start;
   src   =src_start;
 }
 
-//set the path to where the localized files are
+
 void set_localizer_path(char* path){
   strcpy(locale_path, path);
 }

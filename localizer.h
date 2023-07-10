@@ -1,15 +1,10 @@
 #ifndef LOCALIZER_H_
 #define LOCALIZER_H_
 
-#include <linux/limits.h>
 #include <stdio.h>
 
 #define TITLE 0
 #define DESCRIPTION 1
-
-
-
-//extern char language_index_path[PATH_MAX];
 
 //inits
 
@@ -26,7 +21,7 @@ void close_files(void);
 char* get_language_id(char language);
 //get a localized string from any file
 char* get_localized_string_from_file(FILE* localized_file ,char* name, char category);
-// get a localized string from a the SET_FILE
+// get a localized string from a the DEFAULT_FILE
 char* get_localized_string(char* name, char category);
 char* get_category(int category);
 //name= main_menu / description
