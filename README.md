@@ -35,7 +35,7 @@ key_title:"value"
 key_description:"value"
 ```
 It is planned to make it possible to configure these "sub categories" in your own program.
-As of now, no inline `"`are supported, but may be possible in the future with the `\`. An example would look something like this:
+Using `"` is possible with `\`:
 ```
 #en_main_menu.yml
 new_file_title:"New file"
@@ -44,7 +44,7 @@ load_file_title:"Load file"
 load_file_description:"Load an existing file"
 settings_option:"Settings"
 quit_option_title:"Quit"
-quit_option_description:"Quit the programm."
+quit_option_description:"Quit the \"programm\"."
 ```
 It's possible to leave out the substring anytime, as when no specification given the programm will return an empty string when there is no matching substring to return.
 
