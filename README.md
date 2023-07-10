@@ -88,7 +88,7 @@ int main(){
 ## License
 This project is licensed under the GNU General Public License v3.0
 ## Roadmap
-1. Adding documentation
-2. Configuring install script
-3. Improving code / fixing bugs
-4. More features like special character support and usage of escape characters
+- Adding documentation
+-  Configuring install script
+- Improving code / fixing bugs
+- More features like special character support and usage of escape characters
